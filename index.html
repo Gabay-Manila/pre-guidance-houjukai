@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>特定技能外国人 事前ガイダンス資料 | 社会福祉法人 宝寿会</title>
+<meta name="description" content="特定技能外国人のための事前ガイダンス資料。報酬・労働条件・在留手続き・社会保険・子育て支援をわかりやすく説明します。">
+<style>
+  /* ── Tokens ── */
+  :root {
+    --teal:    #028090;
+    --sea:     #00A896;
+    --mint:    #02C39A;
+    --dark:    #16323A;
+    --ink:     #1E293B;
+    --muted:   #64748B;
+    --faint:   #94A3B8;
+    --paper:   #FFFFFF;
+    --panel:   #F1F8F8;
+    --warn-bg: #FDF1E7;
+    --warn-tx: #9A4B12;
+    --ok-bg:   #EAF7F2;
+    --ok-tx:   #0F6B4A;
+    --radius:  10px;
+    --shadow:  0 2px 12px rgba(11,42,46,.10);
+  }
+
+  /* ── Reset ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Hiragino Sans', 'Noto Sans JP', 'Meiryo', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.7;
+  }
+  img { display: block; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--dark);
+    color: #fff;
+    padding: 64px 24px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before, .hero::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::before { width: 360px; height: 360px; background: var(--teal); opacity: .18; top: -120px; right: -80px; }
+  .hero::after  { width: 280px; height: 280px; background: var(--sea);  opacity: .14; bottom: -100px; left: -60px; }
+  .hero-inner { max-width: 760px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-org {
+    font-size: 13px; letter-spacing: .12em; color: var(--mint);
+    font-weight: 600; margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(24px, 5vw, 38px);
+    font-weight: 800; line-height: 1.25;
+    margin-bottom: 10px;
+  }
+  .hero-en {
+    font-size: clamp(13px, 2.5vw, 17px);
+    color: #BFE9E3; font-style: italic;
+    margin-bottom: 28px;
+  }
+  .hero-rule { width: 56px; height: 3px; background: var(--mint); border-radius: 2px; margin-bottom: 22px; }
+  .hero-desc    { font-size: 14px; color: #DCEFEC; line-height: 1.75; margin-bottom: 6px; }
+  .hero-desc-en { font-size: 12px; color: #8FC6BE; font-style: italic; line-height: 1.6; }
+
+  /* ── Nav pills ── */
+  .nav-wrap {
+    background: var(--dark);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    position: sticky; top: 0; z-index: 100;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav-wrap::-webkit-scrollbar { display: none; }
+  .nav {
+    display: flex; gap: 4px;
+    padding: 10px 16px;
+    width: max-content;
+  }
+  .nav a {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px; font-weight: 600; white-space: nowrap;
+    color: #BFE9E3;
+    transition: background .15s, color .15s;
+  }
+  .nav a:hover, .nav a.active {
+    background: var(--teal); color: #fff;
+  }
+  .nav-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 18px; height: 18px;
+    background: rgba(255,255,255,.12); border-radius: 50%;
+    font-size: 10px;
+  }
+
+  /* ── Layout ── */
+  .main { max-width: 860px; margin: 0 auto; padding: 0 16px 80px; }
+
+  /* ── Section block ── */
+  .sec {
+    margin-top: 56px;
+    scroll-margin-top: 60px;
+  }
+  .sec-header {
+    display: flex; align-items: flex-start; gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--panel);
+  }
+  .sec-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    margin-top: 2px;
+  }
+  .sec-badge {
+    font-size: 11px; font-weight: 700; letter-spacing: .1em;
+    color: var(--sea); text-transform: uppercase; margin-bottom: 3px;
+  }
+  .sec h2 {
+    font-size: clamp(18px, 3.5vw, 24px);
+    font-weight: 800; color: var(--ink); line-height: 1.25;
+    margin-bottom: 3px;
+  }
+  .sec-en {
+    font-size: 13px; color: var(--muted); font-style: italic;
+  }
+
+  /* ── Cards grid ── */
+  .cards { display: grid; gap: 16px; }
+  .cards.col2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .cards.col3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+  .card {
+    background: var(--panel);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+  .card-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .card-icon {
+    width: 34px; height: 34px; flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .card h3 { font-size: 15px; font-weight: 700; color: var(--ink); }
+  .card-sub { font-size: 11px; color: var(--sea); font-style: italic; }
+  .card p   { font-size: 13.5px; color: var(--ink); margin-top: 8px; line-height: 1.65; }
+  .card p.en { font-size: 11.5px; color: var(--muted); font-style: italic; margin-top: 6px; }
+
+  /* ── Callout boxes ── */
+  .callout {
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-top: 16px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .callout-warn { background: var(--warn-bg); color: var(--warn-tx); }
+  .callout-ok   { background: var(--ok-bg);   color: var(--ok-tx); }
+  .callout-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body strong { font-size: 13px; font-weight: 700; display: block; margin-bottom: 4px; }
+  .callout-body p  { font-size: 13px; line-height: 1.65; }
+  .callout-body small { display: block; font-size: 11px; font-style: italic; margin-top: 5px; opacity: .85; }
+
+  /* ── Stat boxes for premium wages ── */
+  .stat-row { display: grid; gap: 14px; grid-template-columns: repeat(3,1fr); }
+  @media(max-width:520px){ .stat-row { grid-template-columns: 1fr; } }
+  .stat-box {
+    background: var(--teal); color: #fff;
+    border-radius: var(--radius);
+    padding: 22px 14px 16px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .stat-icon { font-size: 26px; margin-bottom: 8px; }
+  .stat-num  { font-size: 28px; font-weight: 900; line-height: 1; margin-bottom: 6px; }
+  .stat-label{ font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .stat-sub  { font-size: 11px; opacity: .8; }
+
+  /* ── Table ── */
+  .tbl-wrap { overflow-x: auto; margin-top: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th {
+    background: var(--teal); color: #fff;
+    padding: 10px 12px; text-align: left; font-weight: 700;
+    white-space: nowrap;
+  }
+  tbody tr:nth-child(odd)  { background: var(--panel); }
+  tbody tr:nth-child(even) { background: var(--paper); }
+  td { padding: 11px 12px; vertical-align: top; line-height: 1.55; }
+  td:last-child { font-weight: 700; color: var(--teal); text-align: center; }
+  td small { display: block; font-size: 11px; color: var(--muted); font-style: italic; }
+
+  /* ── Double premium boxes ── */
+  .double-row { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 16px; }
+  .double-box {
+    background: var(--panel);
+    border-radius: var(--radius);
+    padding: 28px 20px 20px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .double-eq  { font-size: clamp(22px,4vw,30px); font-weight: 900; color: var(--teal); margin-bottom: 14px; }
+  .double-rule{ width: 48px; height: 3px; background: var(--mint); border-radius: 2px; margin: 0 auto 14px; }
+  .double-jp  { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+  .double-en  { font-size: 11.5px; color: var(--muted); font-style: italic; }
+
+  /* ── Row items (Section 06) ── */
+  .row-item {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: var(--panel);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-top: 12px;
+    box-shadow: var(--shadow);
+  }
+  .row-item-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .row-item-body p    { font-size: 13.5px; color: var(--ink); line-height: 1.65; }
+  .row-item-body small{ display: block; font-size: 11px; color: var(--muted); font-style: italic; margin-top: 5px; }
+
+  /* ── Formula (Section 03) ── */
+  .formula {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 10px;
+    margin: 16px 0;
+  }
+  .formula-box {
+    padding: 18px 24px;
+    border-radius: var(--radius);
+    font-size: 18px; font-weight: 800;
+    color: #fff; text-align: center;
+    min-width: 120px;
+    box-shadow: var(--shadow);
+  }
+  .formula-box small { display: block; font-size: 11px; font-weight: 400; margin-top: 4px; opacity: .85; }
+  .formula-op { font-size: 28px; font-weight: 900; color: var(--ink); }
+  .f-gross  { background: var(--sea); }
+  .f-deduct { background: var(--teal); }
+  .f-net    { background: var(--mint); color: var(--ink); }
+
+  /* ── Contact block ── */
+  .contact-card {
+    background: var(--dark);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    margin-top: 24px;
+  }
+  .contact-head {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+    font-size: 16px; font-weight: 700;
+  }
+  .contact-head .ci { font-size: 24px; }
+  .contact-row {
+    display: grid; grid-template-columns: auto 1fr; gap: 6px 16px;
+    align-items: baseline;
+    font-size: 13.5px;
+    border-top: 1px solid rgba(255,255,255,.1);
+    padding-top: 12px;
+    margin-top: 12px;
+  }
+  .contact-label { color: var(--mint); font-weight: 600; font-size: 11.5px; white-space: nowrap; }
+  .contact-val   { color: #fff; line-height: 1.55; }
+  .contact-val a { color: #BFE9E3; text-decoration: underline; }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center; padding: 32px 16px;
+    font-size: 12px; color: var(--faint);
+    border-top: 1px solid var(--panel);
+  }
+
+  /* ── Responsive ── */
+  @media(max-width:600px){
+    .sec { margin-top: 40px; }
+    .stat-num { font-size: 24px; }
+    .formula-box { padding: 14px 16px; font-size: 15px; min-width: 90px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Hero ── -->
+<header class="hero">
+  <div class="hero-inner">
+    <p class="hero-org">社会福祉法人　宝寿会　/　Social Welfare Corporation Houjyu-kai</p>
+    <h1>特定技能外国人<br>事前ガイダンス資料</h1>
+    <p class="hero-en">Pre-Departure Guidance for Specified Skilled Workers</p>
+    <div class="hero-rule"></div>
+    <p class="hero-desc">報酬・労働条件・在留手続き・社会保険・子育て支援を、本人が安心して理解できるようにご説明します。</p>
+    <p class="hero-desc-en">Explaining pay, working conditions, residence procedures, social insurance, and childcare support so workers can feel confident and informed.</p>
+  </div>
+</header>
+
+<!-- ── Sticky Nav ── -->
+<nav class="nav-wrap" aria-label="目次">
+  <div class="nav">
+    <a href="#s01"><span class="nav-num">01</span>報酬</a>
+    <a href="#s02"><span class="nav-num">02</span>控除</a>
+    <a href="#s03"><span class="nav-num">03</span>手取り</a>
+    <a href="#s04"><span class="nav-num">04</span>待遇</a>
+    <a href="#s05"><span class="nav-num">05</span>割増賃金</a>
+    <a href="#s06"><span class="nav-num">06</span>ポイント</a>
+    <a href="#s07"><span class="nav-num">07</span>在留カード</a>
+    <a href="#s08"><span class="nav-num">08</span>市区町村</a>
+    <a href="#s09"><span class="nav-num">09</span>労働ルール</a>
+    <a href="#s10"><span class="nav-num">10</span>保険</a>
+    <a href="#s11"><span class="nav-num">11</span>子育て</a>
+    <a href="#s12"><span class="nav-num">12</span>支援体制</a>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ────────────────── 01 ────────────────── -->
+<section class="sec" id="s01">
+  <div class="sec-header">
+    <div class="sec-icon">💴</div>
+    <div>
+      <p class="sec-badge">Section 01</p>
+      <h2>報酬の額とその内訳</h2>
+      <p class="sec-en">Amount of Remuneration and Its Breakdown</p>
+    </div>
+  </div>
+  <div class="cards col2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">📄</div>
+        <div><h3>基本給の額</h3><p class="card-sub">Basic Salary</p></div>
+      </div>
+      <p>月給・日給・時給などの形態と、具体的な金額を確認します。</p>
+      <p class="en">Type of payment (monthly / daily / hourly) and the specific amount.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">📋</div>
+        <div><h3>手当の内訳</h3><p class="card-sub">Breakdown of Allowances</p></div>
+      </div>
+      <p>皆勤手当・住宅手当・役職手当などの種類と、それぞれの支給基準・金額。</p>
+      <p class="en">Types, payment criteria, and amounts of allowances (attendance, housing, position, etc.).</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">🔢</div>
+        <div><h3>時給換算額</h3><p class="card-sub">Hourly Equivalent Amount</p></div>
+      </div>
+      <p>月給・日給の場合、割増賃金（残業代）計算の基準となる1時間あたりの金額。</p>
+      <p class="en">For monthly/daily pay, the hourly rate used as the basis for overtime calculations.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">📈</div>
+        <div><h3>賞与・昇給</h3><p class="card-sub">Bonuses and Pay Raises</p></div>
+      </div>
+      <p>賞与・昇給の支給や適用の有無、その条件について説明します。</p>
+      <p class="en">Availability and conditions for bonuses and pay raises.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── 02 ────────────────── -->
+<section class="sec" id="s02">
+  <div class="sec-header">
+    <div class="sec-icon">📑</div>
+    <div>
+      <p class="sec-badge">Section 02</p>
+      <h2>給与から控除される項目</h2>
+      <p class="sec-en">Items Deducted from Salary</p>
+    </div>
+  </div>
+  <div class="cards col2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">🛡️</div>
+        <div><h3>法定控除</h3><p class="card-sub">Statutory Deductions</p></div>
+      </div>
+      <p>健康保険・厚生年金・雇用保険・住民税・所得税などの概算額。</p>
+      <p class="en">Estimated health insurance, pension, employment insurance, resident tax, and income tax.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">🏠</div>
+        <div><h3>その他の控除</h3><p class="card-sub">Other Deductions</p></div>
+      </div>
+      <p>社宅・寮費、水道光熱費など、給料から天引きされる実費とその金額。</p>
+      <p class="en">Actual expenses deducted from salary, such as housing/dormitory fees and utilities.</p>
+    </div>
+  </div>
+  <div class="callout callout-warn">
+    <span class="callout-icon">⚠️</span>
+    <div class="callout-body">
+      <strong>注意 / Note</strong>
+      <p>これらの控除は「賃金控除に関する労使協定」に基づいており、本人が内容を理解し、合意している必要があります。</p>
+      <small>These deductions are based on the Labor–Management Agreement on Wage Deductions and must be understood and agreed upon by the worker.</small>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── 03 ────────────────── -->
+<section class="sec" id="s03">
+  <div class="sec-header">
+    <div class="sec-icon">👛</div>
+    <div>
+      <p class="sec-badge">Section 03</p>
+      <h2>手取り額の目安</h2>
+      <p class="sec-en">Estimated Take-Home Pay</p>
+    </div>
+  </div>
+  <div class="formula">
+    <div class="formula-box f-gross">総支給額<small>Gross Payment</small></div>
+    <span class="formula-op">−</span>
+    <div class="formula-box f-deduct">控除額<small>Deductions</small></div>
+    <span class="formula-op">=</span>
+    <div class="formula-box f-net">手取り額<small>Take-Home Pay</small></div>
+  </div>
+  <div class="row-item">
+    <span class="row-item-icon">⏰</span>
+    <div class="row-item-body">
+      <p><strong>残業の想定：</strong>残業が見込まれる場合は、想定される残業時間とそれに応じた見込み額を共有します。</p>
+      <small>Expected Overtime: if overtime is expected, share the estimated hours and corresponding expected amount.</small>
+    </div>
+  </div>
+  <div class="callout callout-ok">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">
+      <strong>ポイント / Point</strong>
+      <p>外国人本人が最も関心を持つ部分であるため、丁寧に説明します。</p>
+      <small>This is the part of greatest concern to the worker — explain it thoroughly and carefully.</small>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── 04 ────────────────── -->
+<section class="sec" id="s04">
+  <div class="sec-header">
+    <div class="sec-icon">⚖️</div>
+    <div>
+      <p class="sec-badge">Section 04</p>
+      <h2>待遇の適正性（日本人との比較）</h2>
+      <p class="sec-en">Appropriateness of Treatment (Comparison with Japanese Workers)</p>
+    </div>
+  </div>
+  <div class="cards col2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">🤝</div>
+        <div><h3>同等以上の報酬</h3><p class="card-sub">Equal or Higher Remuneration</p></div>
+      </div>
+      <p>同等の経験年数・業務内容の日本人労働者と比較して、同等以上の報酬水準であることの理由を示します。</p>
+      <p class="en">Reasons showing the remuneration is equal to or higher than Japanese workers with equivalent experience and duties.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">📊</div>
+        <div><h3>比較対象がいない場合</h3><p class="card-sub">When There Is No Comparable Worker</p></div>
+      </div>
+      <p>比較対象となる日本人がいない場合は、賃金テーブルや業界水準、今後の日本人採用時の想定を根拠とします。</p>
+      <p class="en">If no comparable Japanese worker exists, the basis is wage tables, industry standards, or future hiring assumptions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── 05 ────────────────── -->
+<section class="sec" id="s05">
+  <div class="sec-header">
+    <div class="sec-icon">⚡</div>
+    <div>
+      <p class="sec-badge">Section 05</p>
+      <h2>割増賃金の仕組み</h2>
+      <p class="sec-en">Mechanism of Premium Wages</p>
+    </div>
+  </div>
+  <p style="font-size:13.5px;margin-bottom:8px;">日本の法律では、決められた時間を超えて働いた場合、会社は通常の時給に上乗せ（割増）してお金を払わなければなりません。大きく分けて「残業」「深夜」「休日」の3種類があります。</p>
+  <p style="font-size:11.5px;color:var(--muted);font-style:italic;margin-bottom:20px;">Under Japanese law, work beyond the prescribed hours must be paid at a premium rate. There are three categories: Overtime, Late Night, and Days Off.</p>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-icon">⏰</div>
+      <div class="stat-num">1.25倍以上</div>
+      <div class="stat-label">① 残業（時間外）</div>
+      <div class="stat-sub">Overtime · 1日8h／週40h超</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-icon">🌙</div>
+      <div class="stat-num">1.25倍以上</div>
+      <div class="stat-label">② 深夜</div>
+      <div class="stat-sub">Late Night · 22:00〜翌5:00</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-icon">📅</div>
+      <div class="stat-num">1.35倍以上</div>
+      <div class="stat-label">③ 休日</div>
+      <div class="stat-sub">Days Off · 法定休日</div>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>働くタイミング / Timing</th>
+          <th>法律のルール / Legal Rule</th>
+          <th style="text-align:center">倍率 / Multiplier</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>① 残業（時間外）</strong><small>Overtime</small></td>
+          <td>1日8時間、または週40時間を超えて働いたとき<small>Work exceeding 8h/day or 40h/week</small></td>
+          <td>1.25倍以上<small>1.25× or more</small></td>
+        </tr>
+        <tr>
+          <td><strong>② 深夜</strong><small>Late Night</small></td>
+          <td>夜10時（22時）〜朝5時の間に働いたとき<small>Work between 10:00 PM and 5:00 AM</small></td>
+          <td>1.25倍以上<small>1.25× or more</small></td>
+        </tr>
+        <tr>
+          <td><strong>③ 休日</strong><small>Days Off</small></td>
+          <td>法律で決められた休日に働いたとき<small>Work on legally designated days off</small></td>
+          <td>1.35倍以上<small>1.35× or more</small></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:13px;font-weight:700;color:var(--sea);margin:24px 0 4px;">◆ ダブル割増 / Overlapping Premiums</p>
+  <p style="font-size:12px;color:var(--muted);font-style:italic;margin-bottom:8px;">残業が深夜まで続く場合などは、引き算ではなく「足し算」になります。 / If overtime continues into late night, the rates are added together.</p>
+  <div class="double-row">
+    <div class="double-box">
+      <div class="double-eq">1.25 ＋ 0.25 ＝ 1.50倍</div>
+      <div class="double-rule"></div>
+      <div class="double-jp">「残業」が「深夜」まで続いたとき（深夜残業）</div>
+      <div class="double-en">"Overtime" continuing into "Late Night" hours</div>
+    </div>
+    <div class="double-box">
+      <div class="double-eq">1.35 ＋ 0.25 ＝ 1.60倍</div>
+      <div class="double-rule"></div>
+      <div class="double-jp">「休日」に「深夜」まで働いたとき（休日深夜）</div>
+      <div class="double-en">Working during "Late Night" hours on a "Day Off"</div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── 06 ────────────────── -->
+<section class="sec" id="s06">
+  <div class="sec-header">
+    <div class="sec-icon">🔖</div>
+    <div>
+      <p class="sec-badge">Section 06</p>
+      <h2>ガイダンス実施のポイント</h2>
+      <p class="sec-en">Key Points for Conducting the Guidance</p>
+    </div>
+  </div>
+  <div class="row-item">
+    <span class="row-item-icon">🔢</span>
+    <div class="row-item-body">
+      <p><strong>「1時間あたりの金額」を見せる：</strong>「通常の時給が1,000円なら、残業の時は1,250円になります」と、実際の数字に当てはめると一発で理解できます。</p>
+      <small>Show the "amount per hour": e.g. "If your hourly wage is 1,000 yen, it becomes 1,250 yen during overtime" — concrete numbers make it instantly clear.</small>
+    </div>
+  </div>
+  <div class="row-item">
+    <span class="row-item-icon">📅</span>
+    <div class="row-item-body">
+      <p><strong>残業の「月上限」を伝える：</strong>原則月45時間、休日出勤と合わせても月100時間未満という健康を守るルールを伝え、安心感に繋げます。</p>
+      <small>Explain the monthly overtime cap: generally 45h/month, and under 100h/month including holiday work — this provides peace of mind.</small>
+    </div>
+  </div>
+  <div class="row-item">
+    <span class="row-item-icon">⚠️</span>
+    <div class="row-item-body">
+      <p><strong>「固定残業代」がある場合は特に丁寧に：</strong>基本給に含まれる時間を超えたら、別途1.25倍でもらえることを誤解のないよう説明します。</p>
+      <small>Be extra careful with "fixed overtime pay": clearly explain that hours beyond the included amount are paid separately at 1.25×.</small>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── 07 ────────────────── -->
+<section class="sec" id="s07">
+  <div class="sec-header">
+    <div class="sec-icon">🪪</div>
+    <div>
+      <p class="sec-badge">Section 07</p>
+      <h2>在留カードと各種届出</h2>
+      <p class="sec-en">Residence Card and Various Notifications</p>
+    </div>
+  </div>
+  <div class="cards col2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">🪪</div>
+        <div><h3>携行の義務</h3><p class="card-sub">Carry-At-All-Times Rule</p></div>
+      </div>
+      <p>3ヶ月以上日本に住む外国人のIDカードであり、16歳以上の人は常に持ち歩く必要があります。</p>
+      <p class="en">ID card for foreign residents staying 3+ months; those aged 16 or older must carry it at all times.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">🚨</div>
+        <div><h3>紛失したとき</h3><p class="card-sub">If the Card Is Lost</p></div>
+      </div>
+      <p>近くの交番に届け出て「遺失届出証明書」を取得し、入管で再発行の手続きを行います。</p>
+      <p class="en">Report to the nearest police box to obtain a Certificate of Lost Property, then reissue it at the Immigration Bureau.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">📝</div>
+        <div><h3>各種届出（14日以内）</h3><p class="card-sub">Notifications (Within 14 Days)</p></div>
+      </div>
+      <p>引っ越し・帰国・氏名や国籍の変更、所属先の変更時は役所や入管へ届出が必要です。</p>
+      <p class="en">Notify the municipal office/Immigration for moves, return home, name/nationality changes, or affiliation changes.</p>
+    </div>
+    <div class="card" style="background:#fff5f0;border:1.5px solid #f5cbb0;">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--warn-tx)">⚠️</div>
+        <div><h3>オーバーステイ</h3><p class="card-sub">Overstaying</p></div>
+      </div>
+      <p>在留期限を1日でも過ぎる、または資格外の仕事をすると、出国の上5〜10年（重い場合は永続）再入国できません。</p>
+      <p class="en">Overstaying even one day, or unauthorized work, means deportation and a 5–10 year (or permanent) re-entry ban.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">👶</div>
+        <div><h3>赤ちゃんが生まれたら</h3><p class="card-sub">If a Baby Is Born</p></div>
+      </div>
+      <p>14日以内に「出生届」を提出。60日を超えて滞在する場合は30日以内に在留カードを申請します。</p>
+      <p class="en">File a Birth Notification within 14 days; apply for a residence card within 30 days if staying over 60 days.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── 08 ────────────────── -->
+<section class="sec" id="s08">
+  <div class="sec-header">
+    <div class="sec-icon">🏢</div>
+    <div>
+      <p class="sec-badge">Section 08</p>
+      <h2>市区町村での手続き</h2>
+      <p class="sec-en">Procedures at Municipal Offices</p>
+    </div>
+  </div>
+  <div class="cards col2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">🏠</div>
+        <div><h3>住所変更</h3><p class="card-sub">Change of Address</p></div>
+      </div>
+      <p>新しい街に引っ越したら14日以内に「転入届」、別の市区町村へ移る前には「転出届」を出します。</p>
+      <p class="en">File a Moving-in Notification within 14 days; a Moving-out Notification before leaving.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">💕</div>
+        <div><h3>婚姻届</h3><p class="card-sub">Marriage Registration</p></div>
+      </div>
+      <p>役所に「婚姻届」を提出。外国人側は大使館等が発行する「婚姻要件具備証明書」が必要です。</p>
+      <p class="en">Submit a Marriage Registration; foreign nationals need a Certificate of Legal Capacity to Marry from their embassy.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">🔏</div>
+        <div><h3>印鑑登録</h3><p class="card-sub">Seal Registration</p></div>
+      </div>
+      <p>家や車の購入など重要な契約に使う「実印」は、役所での印鑑登録により作ることができます。</p>
+      <p class="en">A registered personal seal (jitsuin), used for major contracts, can be created by registering at the municipal office.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">🔢</div>
+        <div><h3>マイナンバー制度</h3><p class="card-sub">My Number System</p></div>
+      </div>
+      <p>日本で生活する全員に番号が交付され、送金・銀行口座開設・税金・社会保険の手続きに必要です。</p>
+      <p class="en">A unique number issued to all residents, required for remittances, bank accounts, taxes, and social insurance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── 09 ────────────────── -->
+<section class="sec" id="s09">
+  <div class="sec-header">
+    <div class="sec-icon">💼</div>
+    <div>
+      <p class="sec-badge">Section 09</p>
+      <h2>労働ルールと就労条件</h2>
+      <p class="sec-en">Labor Rules and Working Conditions</p>
+    </div>
+  </div>
+  <div class="cards col2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">💼</div>
+        <div><h3>就労の制限</h3><p class="card-sub">Restrictions on Work</p></div>
+      </div>
+      <p>在留資格ごとに可能な仕事が決まっています。仕事探しは「外国人雇用サービスセンター」、トラブル相談は「外国人労働者相談コーナー」が利用できます。</p>
+      <p class="en">Permitted work depends on residence status. Use the Employment Service Center for Foreigners or the Counseling Corner for Foreign Workers for issues.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">📄</div>
+        <div><h3>雇用契約と給料</h3><p class="card-sub">Employment Contracts &amp; Wages</p></div>
+      </div>
+      <p>働く前に必ず契約書を確認し、最低賃金以上であるか、不当なペナルティの項目がないかをチェックします。</p>
+      <p class="en">Always check your contract before starting: confirm wages meet minimum wage with no unfair penalty clauses.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">⏰</div>
+        <div><h3>労働時間と休日</h3><p class="card-sub">Working Hours &amp; Days Off</p></div>
+      </div>
+      <p>原則「1日8時間・週40時間以内」。残業（1.25倍以上）や休日出勤（1.35倍以上）には割増賃金が発生。6ヶ月継続勤務＋8割以上出勤で年次有給休暇。</p>
+      <p class="en">Standard is 8h/day, 40h/week. Overtime (1.25×+) and holiday work (1.35×+) earn premium pay; paid leave after 6 months with 80%+ attendance.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">🏖️</div>
+        <div><h3>特別な休暇</h3><p class="card-sub">Special Leave</p></div>
+      </div>
+      <p>出産のための「産前産後休業」、子どもを育てる「育児休業」、家族のお世話のための「介護休業」があります。</p>
+      <p class="en">Maternity leave before/after childbirth, childcare leave, and family care leave are all available.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">👤</div>
+        <div><h3>自己都合で辞める場合</h3><p class="card-sub">If Resigning Voluntarily</p></div>
+      </div>
+      <p>契約期間の定めがない場合は、会社の就業規則（または2週間前まで）に従って上司に伝えます。</p>
+      <p class="en">Notify your supervisor according to company rules (or at least 2 weeks in advance) for an indefinite-term contract.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--warn-tx)">⚠️</div>
+        <div><h3>会社から解雇される場合</h3><p class="card-sub">If Dismissed by the Company</p></div>
+      </div>
+      <p>会社から解雇を言い渡される場合は、原則30日以上前に通知される必要があります。</p>
+      <p class="en">If the company dismisses you, notice must, in principle, be given at least 30 days in advance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── 10 ────────────────── -->
+<section class="sec" id="s10">
+  <div class="sec-header">
+    <div class="sec-icon">🛡️</div>
+    <div>
+      <p class="sec-badge">Section 10</p>
+      <h2>社会保険と労働保険</h2>
+      <p class="sec-en">Social Insurance and Labor Insurance</p>
+    </div>
+  </div>
+  <div class="cards col2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">❤️</div>
+        <div><h3>健康保険・厚生年金</h3><p class="card-sub">Health Insurance &amp; Pension</p></div>
+      </div>
+      <p>病院での医療費は3割負担（70%給付）。将来（65歳等）には年金を受け取ることができます。</p>
+      <p class="en">Medical costs are 70% covered (30% co-pay); pension benefits are received from around age 65.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">💼</div>
+        <div><h3>雇用保険</h3><p class="card-sub">Employment Insurance</p></div>
+      </div>
+      <p>仕事を失った際に、次の仕事が見つかるまで数ヶ月間手当がもらえます。</p>
+      <p class="en">If you lose your job, you can receive allowances for several months while job-hunting.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">🏥</div>
+        <div><h3>労災保険</h3><p class="card-sub">Industrial Accident Insurance</p></div>
+      </div>
+      <p>仕事中や通勤途中のケガ・病気に保険金が出ます。費用は会社が全額負担します。</p>
+      <p class="en">Covers injuries or illness during work or commuting; the company covers the full cost.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">✅</div>
+        <div><h3>加入の義務</h3><p class="card-sub">Mandatory Enrollment</p></div>
+      </div>
+      <p>給料から保険料が引かれる形で加入が義務付けられています（会社員以外は国民健康保険・国民年金）。</p>
+      <p class="en">Enrollment is mandatory via salary deduction (non-company employees use National Health Insurance/Pension).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── 11 ────────────────── -->
+<section class="sec" id="s11">
+  <div class="sec-header">
+    <div class="sec-icon">👶</div>
+    <div>
+      <p class="sec-badge">Section 11</p>
+      <h2>出産と子育て支援</h2>
+      <p class="sec-en">Childbirth and Child-Rearing Support</p>
+    </div>
+  </div>
+  <div class="cards col2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">❤️</div>
+        <div><h3>妊娠がわかったら</h3><p class="card-sub">When Pregnancy Is Confirmed</p></div>
+      </div>
+      <p>役所や保健センターに「妊娠届出書」を出し、「母子健康手帳」と妊婦健診の割引券を受け取ります。</p>
+      <p class="en">Submit a Pregnancy Notification to receive a Maternal &amp; Child Health Handbook and checkup discount coupons.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">💰</div>
+        <div><h3>手当金</h3><p class="card-sub">Allowances and Subsidies</p></div>
+      </div>
+      <p>出産時に42万円の「出産育児一時金」、育休中の給付金、中学卒業までの「児童手当」があります。</p>
+      <p class="en">A 420,000 yen lump-sum childbirth allowance, childcare leave benefits, and Child Allowance until junior high.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">💉</div>
+        <div><h3>検診と予防接種</h3><p class="card-sub">Checkups and Vaccinations</p></div>
+      </div>
+      <p>役所が実施する「乳幼児健診」や「予防接種」を無料（一部有料）で受けることができます。</p>
+      <p class="en">Free (some fee-based) infant health checkups and vaccinations provided by the municipality.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">🏫</div>
+        <div><h3>預け先</h3><p class="card-sub">Childcare Facilities</p></div>
+      </div>
+      <p>0歳からの「保育園」、3歳からの「幼稚園」、両方の特徴を持つ「認定こども園」。3〜5歳児は基本無料。</p>
+      <p class="en">Nursery (0+), kindergarten (3+), or combined centers; childcare for ages 3–5 is basically free.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── 12 ────────────────── -->
+<section class="sec" id="s12">
+  <div class="sec-header">
+    <div class="sec-icon">🤲</div>
+    <div>
+      <p class="sec-badge">Section 12</p>
+      <h2>私たちの支援体制・相談窓口</h2>
+      <p class="sec-en">Our Support System &amp; Contact Person</p>
+    </div>
+  </div>
+  <div class="cards col2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">✈️</div>
+        <div><h3>空港送迎</h3><p class="card-sub">Airport Pickup</p></div>
+      </div>
+      <p>入国時の空港送迎を会社が行います。到着後すぐに安心していただけるようサポートします。</p>
+      <p class="en">The company provides transportation from the airport upon your arrival in Japan.</p>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">🏠</div>
+        <div><h3>住居サポート</h3><p class="card-sub">Housing Support</p></div>
+      </div>
+      <p>住居の確保・契約を会社がサポートします。初めての一人暮らしでも安心です。</p>
+      <p class="en">The company supports you in securing and contracting your housing.</p>
+    </div>
+  </div>
+
+  <div class="contact-card">
+    <div class="contact-head">
+      <span class="ci">📞</span>
+      <span>相談窓口　<span style="font-size:13px;font-weight:400;color:#BFE9E3;">Contact Person</span></span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label">機関名 / Organization</span>
+      <span class="contact-val">社会福祉法人　宝寿会<br><span style="font-size:12px;color:#8FC6BE;">Social Welfare Corporation Houjyu-kai</span></span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label">担当 / Contact</span>
+      <span class="contact-val">法人本部 総務部 海外人材支援担当<br>原 博司（はら ひろし）　/　Hiroshi Hara</span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label">住所 / Address</span>
+      <span class="contact-val">〒671-2222 兵庫県姫路市青山1470-141<br><span style="font-size:12px;color:#8FC6BE;">1470-141 Aoyama, Himeji City, Hyogo, 671-2222</span></span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label">TEL</span>
+      <span class="contact-val"><a href="tel:+81792683511">+81-(0)79-268-3511</a></span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label">FAX</span>
+      <span class="contact-val">+81-(0)79-269-9388</span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-label">Email</span>
+      <span class="contact-val"><a href="mailto:jinji02@houjyu-kai.or.jp">jinji02@houjyu-kai.or.jp</a></span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>© 社会福祉法人　宝寿会　/　Social Welfare Corporation Houjyu-kai</p>
+  <p style="margin-top:4px;">特定技能外国人 事前ガイダンス資料　/　Pre-Departure Guidance for Specified Skilled Workers</p>
+</footer>
+
+<script>
+// ── Active nav highlight on scroll ──
+const sections = document.querySelectorAll('.sec');
+const navLinks  = document.querySelectorAll('.nav a');
+const observer  = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => a.classList.remove('active'));
+      const link = document.querySelector(`.nav a[href="#${e.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-50% 0px -50% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
