@@ -326,8 +326,70 @@
     50%      { opacity: .7; }
   }
 
+  /* ── TTS Settings Panel ── */
+  #tts-settings-wrap {
+    position: fixed; bottom: 24px; right: 20px;
+    z-index: 1000;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+  }
+
+  #tts-panel {
+    background: var(--dark); color: #fff;
+    border-radius: 16px;
+    padding: 18px 20px;
+    box-shadow: 0 6px 28px rgba(0,0,0,.35);
+    width: 280px;
+    display: none;
+  }
+  #tts-panel.open { display: block; }
+
+  #tts-panel h4 {
+    font-size: 13px; font-weight: 700; color: var(--mint);
+    margin-bottom: 14px; letter-spacing: .05em;
+  }
+
+  .tts-field { margin-bottom: 14px; }
+  .tts-field label {
+    display: block; font-size: 11px; font-weight: 600;
+    color: var(--faint); margin-bottom: 6px; letter-spacing: .06em;
+  }
+
+  /* Speed pills */
+  .speed-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+  .speed-pill {
+    padding: 5px 12px; border-radius: 14px; border: none;
+    font-size: 12px; font-weight: 700; cursor: pointer;
+    background: rgba(255,255,255,.1); color: #fff;
+    transition: background .15s;
+  }
+  .speed-pill:hover   { background: rgba(255,255,255,.2); }
+  .speed-pill.active  { background: var(--teal); }
+
+  /* Voice select */
+  #voice-select {
+    width: 100%; padding: 7px 10px;
+    border-radius: 8px; border: 1px solid rgba(255,255,255,.15);
+    background: rgba(255,255,255,.08); color: #fff;
+    font-size: 12px; cursor: pointer; outline: none;
+  }
+  #voice-select option { background: var(--dark); color: #fff; }
+
+  /* Gear / close toggle button */
+  #tts-gear {
+    width: 44px; height: 44px;
+    border-radius: 50%; border: none; cursor: pointer;
+    background: var(--teal); color: #fff;
+    font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(2,128,144,.4);
+    transition: background .15s;
+    flex-shrink: 0;
+  }
+  #tts-gear:hover { background: var(--sea); }
+
+  /* ── Toast bar (reading status) ── */
   #tts-toast {
-    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
     background: var(--dark); color: #fff;
     padding: 10px 20px; border-radius: 24px;
     font-size: 13px; font-weight: 600;
@@ -335,7 +397,7 @@
     box-shadow: 0 4px 20px rgba(0,0,0,.3);
     z-index: 999; opacity: 0; pointer-events: none;
     transition: opacity .25s;
-    max-width: 90vw;
+    max-width: 80vw;
   }
   #tts-toast.visible { opacity: 1; pointer-events: auto; }
   #tts-stop {
@@ -964,10 +1026,36 @@
   <p style="margin-top:4px;">特定技能外国人 事前ガイダンス資料　/　Pre-Departure Guidance for Specified Skilled Workers</p>
 </footer>
 
-<!-- TTS toast bar -->
+<!-- ── TTS toast bar ── -->
 <div id="tts-toast">
   <span id="tts-label">🔊 Reading…</span>
   <button id="tts-stop">■ Stop</button>
+</div>
+
+<!-- ── TTS Settings Panel (bottom-right) ── -->
+<div id="tts-settings-wrap">
+  <div id="tts-panel">
+    <h4>🔊 SPEECH SETTINGS</h4>
+
+    <div class="tts-field">
+      <label>SPEED / スピード</label>
+      <div class="speed-pills">
+        <button class="speed-pill" data-rate="0.7">🐢 Slow</button>
+        <button class="speed-pill active" data-rate="0.92">▶ Normal</button>
+        <button class="speed-pill" data-rate="1.2">⚡ Fast</button>
+        <button class="speed-pill" data-rate="1.5">🚀 Very Fast</button>
+      </div>
+    </div>
+
+    <div class="tts-field">
+      <label>VOICE / 読み上げ音声</label>
+      <select id="voice-select">
+        <option value="">— loading voices… —</option>
+      </select>
+    </div>
+  </div>
+
+  <button id="tts-gear" title="Speech settings / 音声設定">⚙️</button>
 </div>
 
 <script>
@@ -988,51 +1076,114 @@ const observer  = new IntersectionObserver(entries => {
 sections.forEach(s => observer.observe(s));
 
 // ────────────────────────────────────────────
-// 2. TTS — English read-aloud per section
+// 2. TTS state
 // ────────────────────────────────────────────
-
-// Section labels used in the toast
 const SEC_LABELS = {
-  s01:'Section 01 · Remuneration',
-  s02:'Section 02 · Deductions',
-  s03:'Section 03 · Take-Home Pay',
-  s04:'Section 04 · Fair Treatment',
-  s05:'Section 05 · Premium Wages',
-  s06:'Section 06 · Key Points',
-  s07:'Section 07 · Residence Card',
-  s08:'Section 08 · Municipal Offices',
-  s09:'Section 09 · Labor Rules',
-  s10:'Section 10 · Insurance',
-  s11:'Section 11 · Childbirth & Childcare',
-  s12:'Section 12 · Support System',
+  s01:'Section 01 · Remuneration',      s02:'Section 02 · Deductions',
+  s03:'Section 03 · Take-Home Pay',     s04:'Section 04 · Fair Treatment',
+  s05:'Section 05 · Premium Wages',     s06:'Section 06 · Key Points',
+  s07:'Section 07 · Residence Card',    s08:'Section 08 · Municipal Offices',
+  s09:'Section 09 · Labor Rules',       s10:'Section 10 · Insurance',
+  s11:'Section 11 · Childbirth & Childcare', s12:'Section 12 · Support System',
 };
 
-// English text selectors inside each .sec
 const EN_SELECTORS = [
-  '.sec-en',
-  '.card-sub',
-  '.card p.en',
-  '.callout-body small',
-  '.double-en',
-  '.stat-sub',
+  '.sec-en', '.card-sub', '.card p.en',
+  '.callout-body small', '.double-en', '.stat-sub',
   '.row-item-body small',
-  '.hero-desc-en',
 ];
 
 let currentBtn = null;
+let ttsRate    = 0.92;
+let ttsVoice   = null;
+
 const toast    = document.getElementById('tts-toast');
 const toastLbl = document.getElementById('tts-label');
 const stopBtn  = document.getElementById('tts-stop');
+const gearBtn  = document.getElementById('tts-gear');
+const panel    = document.getElementById('tts-panel');
+const voiceSel = document.getElementById('voice-select');
 
+// ── Settings panel toggle ──
+gearBtn.addEventListener('click', () => {
+  panel.classList.toggle('open');
+  gearBtn.textContent = panel.classList.contains('open') ? '✕' : '⚙️';
+});
+
+// Close panel when clicking outside
+document.addEventListener('click', e => {
+  if (!document.getElementById('tts-settings-wrap').contains(e.target)) {
+    panel.classList.remove('open');
+    gearBtn.textContent = '⚙️';
+  }
+});
+
+// ── Speed pills ──
+document.querySelectorAll('.speed-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.speed-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    ttsRate = parseFloat(pill.dataset.rate);
+  });
+});
+
+// ── Voice list ──
+function populateVoices() {
+  const voices = window.speechSynthesis.getVoices()
+    .filter(v => v.lang.startsWith('en'));
+
+  if (!voices.length) return;
+
+  voiceSel.innerHTML = '';
+
+  // Group: local (natural) first, then remote
+  const local  = voices.filter(v => v.localService);
+  const remote = voices.filter(v => !v.localService);
+  const ordered = [...local, ...remote];
+
+  // "Auto" option
+  const autoOpt = document.createElement('option');
+  autoOpt.value = '__auto__';
+  autoOpt.textContent = '⭐ Auto (best available)';
+  voiceSel.appendChild(autoOpt);
+
+  ordered.forEach(v => {
+    const opt = document.createElement('option');
+    opt.value = v.name;
+    opt.textContent = `${v.localService ? '🖥' : '☁️'} ${v.name} (${v.lang})`;
+    voiceSel.appendChild(opt);
+  });
+
+  // Default to first local en-US or en-GB voice
+  const best = local.find(v => v.lang === 'en-US') ||
+               local.find(v => v.lang === 'en-GB') ||
+               local[0];
+  if (best) {
+    voiceSel.value = best.name;
+    ttsVoice = best;
+  }
+}
+
+voiceSel.addEventListener('change', () => {
+  if (voiceSel.value === '__auto__') { ttsVoice = null; return; }
+  ttsVoice = window.speechSynthesis.getVoices().find(v => v.name === voiceSel.value) || null;
+});
+
+if (window.speechSynthesis) {
+  populateVoices();
+  window.speechSynthesis.onvoiceschanged = populateVoices;
+}
+
+// ── Core TTS functions ──
 function getEnglishText(sec) {
   const parts = [];
   EN_SELECTORS.forEach(sel => {
     sec.querySelectorAll(sel).forEach(el => {
-      const t = el.innerText.trim().replace(/\s+/g,' ');
+      const t = el.innerText.trim().replace(/\s+/g, ' ');
       if (t) parts.push(t);
     });
   });
-  return parts.join('. ').replace(/\.\./g,'.');
+  return parts.join('. ').replace(/\.\./g, '.');
 }
 
 function stopSpeech() {
@@ -1050,26 +1201,27 @@ function speak(sec, btn) {
     alert('お使いのブラウザは音声読み上げに対応していません。\nYour browser does not support speech synthesis.');
     return;
   }
-
-  // If already speaking this button → stop
   if (currentBtn === btn) { stopSpeech(); return; }
-
-  // Stop any previous speech
   stopSpeech();
 
   const text = getEnglishText(sec);
   if (!text) return;
 
-  const utt = new SpeechSynthesisUtterance(text);
-  utt.lang  = 'en-US';
-  utt.rate  = 0.92;
-  utt.pitch = 1.0;
+  const utt   = new SpeechSynthesisUtterance(text);
+  utt.lang    = 'en-US';
+  utt.rate    = ttsRate;
+  utt.pitch   = 1.0;
 
-  // Prefer a natural English voice if available
-  const voices = window.speechSynthesis.getVoices();
-  const enVoice = voices.find(v => v.lang.startsWith('en') && v.localService) ||
-                  voices.find(v => v.lang.startsWith('en'));
-  if (enVoice) utt.voice = enVoice;
+  // Apply selected voice
+  if (ttsVoice) {
+    utt.voice = ttsVoice;
+  } else {
+    // auto: pick best available English voice
+    const voices = window.speechSynthesis.getVoices();
+    utt.voice = voices.find(v => v.lang === 'en-US' && v.localService) ||
+                voices.find(v => v.lang.startsWith('en') && v.localService) ||
+                voices.find(v => v.lang.startsWith('en')) || null;
+  }
 
   utt.onstart = () => {
     currentBtn = btn;
@@ -1085,11 +1237,10 @@ function speak(sec, btn) {
   window.speechSynthesis.speak(utt);
 }
 
-// Inject ▶ EN button into every section header
+// ── Inject Read English button into every section header ──
 document.querySelectorAll('.sec').forEach(sec => {
   const header = sec.querySelector('.sec-header');
   if (!header) return;
-
   const btn = document.createElement('button');
   btn.className = 'tts-btn';
   btn.setAttribute('aria-label', 'Read English aloud');
@@ -1098,14 +1249,7 @@ document.querySelectorAll('.sec').forEach(sec => {
   header.appendChild(btn);
 });
 
-// Stop button in toast
 stopBtn.addEventListener('click', stopSpeech);
-
-// Reload voices on some browsers (Chrome fires voiceschanged asynchronously)
-if (window.speechSynthesis) {
-  window.speechSynthesis.getVoices();
-  window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
-}
 </script>
 </body>
 </html>
