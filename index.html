@@ -295,6 +295,55 @@
     .stat-num { font-size: 24px; }
     .formula-box { padding: 14px 16px; font-size: 15px; min-width: 90px; }
   }
+
+  /* ── TTS (Web Speech API) ── */
+  .sec-header { position: relative; }
+
+  .tts-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: none; cursor: pointer;
+    font-size: 12px; font-weight: 700;
+    background: var(--teal); color: #fff;
+    white-space: nowrap;
+    transition: background .15s, transform .1s;
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 4px;
+    box-shadow: 0 2px 8px rgba(2,128,144,.25);
+  }
+  .tts-btn:hover  { background: var(--sea); }
+  .tts-btn:active { transform: scale(.96); }
+  .tts-btn.speaking {
+    background: #c0392b;
+    animation: tts-pulse 1.2s ease-in-out infinite;
+  }
+  .tts-btn .tts-icon { font-size: 14px; }
+
+  @keyframes tts-pulse {
+    0%,100% { opacity: 1; }
+    50%      { opacity: .7; }
+  }
+
+  #tts-toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--dark); color: #fff;
+    padding: 10px 20px; border-radius: 24px;
+    font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; gap: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.3);
+    z-index: 999; opacity: 0; pointer-events: none;
+    transition: opacity .25s;
+    max-width: 90vw;
+  }
+  #tts-toast.visible { opacity: 1; pointer-events: auto; }
+  #tts-stop {
+    background: #c0392b; color: #fff;
+    border: none; border-radius: 12px;
+    padding: 4px 10px; font-size: 12px; font-weight: 700;
+    cursor: pointer;
+  }
 </style>
 </head>
 <body>
@@ -915,8 +964,16 @@
   <p style="margin-top:4px;">特定技能外国人 事前ガイダンス資料　/　Pre-Departure Guidance for Specified Skilled Workers</p>
 </footer>
 
+<!-- TTS toast bar -->
+<div id="tts-toast">
+  <span id="tts-label">🔊 Reading…</span>
+  <button id="tts-stop">■ Stop</button>
+</div>
+
 <script>
-// ── Active nav highlight on scroll ──
+// ────────────────────────────────────────────
+// 1. Active nav highlight on scroll
+// ────────────────────────────────────────────
 const sections = document.querySelectorAll('.sec');
 const navLinks  = document.querySelectorAll('.nav a');
 const observer  = new IntersectionObserver(entries => {
@@ -929,6 +986,126 @@ const observer  = new IntersectionObserver(entries => {
   });
 }, { rootMargin: '-50% 0px -50% 0px' });
 sections.forEach(s => observer.observe(s));
+
+// ────────────────────────────────────────────
+// 2. TTS — English read-aloud per section
+// ────────────────────────────────────────────
+
+// Section labels used in the toast
+const SEC_LABELS = {
+  s01:'Section 01 · Remuneration',
+  s02:'Section 02 · Deductions',
+  s03:'Section 03 · Take-Home Pay',
+  s04:'Section 04 · Fair Treatment',
+  s05:'Section 05 · Premium Wages',
+  s06:'Section 06 · Key Points',
+  s07:'Section 07 · Residence Card',
+  s08:'Section 08 · Municipal Offices',
+  s09:'Section 09 · Labor Rules',
+  s10:'Section 10 · Insurance',
+  s11:'Section 11 · Childbirth & Childcare',
+  s12:'Section 12 · Support System',
+};
+
+// English text selectors inside each .sec
+const EN_SELECTORS = [
+  '.sec-en',
+  '.card-sub',
+  '.card p.en',
+  '.callout-body small',
+  '.double-en',
+  '.stat-sub',
+  '.row-item-body small',
+  '.hero-desc-en',
+];
+
+let currentBtn = null;
+const toast    = document.getElementById('tts-toast');
+const toastLbl = document.getElementById('tts-label');
+const stopBtn  = document.getElementById('tts-stop');
+
+function getEnglishText(sec) {
+  const parts = [];
+  EN_SELECTORS.forEach(sel => {
+    sec.querySelectorAll(sel).forEach(el => {
+      const t = el.innerText.trim().replace(/\s+/g,' ');
+      if (t) parts.push(t);
+    });
+  });
+  return parts.join('. ').replace(/\.\./g,'.');
+}
+
+function stopSpeech() {
+  window.speechSynthesis.cancel();
+  if (currentBtn) {
+    currentBtn.classList.remove('speaking');
+    currentBtn.innerHTML = '<span class="tts-icon">🔊</span> Read English';
+    currentBtn = null;
+  }
+  toast.classList.remove('visible');
+}
+
+function speak(sec, btn) {
+  if (!('speechSynthesis' in window)) {
+    alert('お使いのブラウザは音声読み上げに対応していません。\nYour browser does not support speech synthesis.');
+    return;
+  }
+
+  // If already speaking this button → stop
+  if (currentBtn === btn) { stopSpeech(); return; }
+
+  // Stop any previous speech
+  stopSpeech();
+
+  const text = getEnglishText(sec);
+  if (!text) return;
+
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang  = 'en-US';
+  utt.rate  = 0.92;
+  utt.pitch = 1.0;
+
+  // Prefer a natural English voice if available
+  const voices = window.speechSynthesis.getVoices();
+  const enVoice = voices.find(v => v.lang.startsWith('en') && v.localService) ||
+                  voices.find(v => v.lang.startsWith('en'));
+  if (enVoice) utt.voice = enVoice;
+
+  utt.onstart = () => {
+    currentBtn = btn;
+    btn.classList.add('speaking');
+    btn.innerHTML = '<span class="tts-icon">■</span> Stop';
+    toastLbl.textContent = '🔊 ' + (SEC_LABELS[sec.id] || 'Reading…');
+    toast.classList.add('visible');
+  };
+  utt.onend = utt.onerror = () => {
+    if (currentBtn === btn) stopSpeech();
+  };
+
+  window.speechSynthesis.speak(utt);
+}
+
+// Inject ▶ EN button into every section header
+document.querySelectorAll('.sec').forEach(sec => {
+  const header = sec.querySelector('.sec-header');
+  if (!header) return;
+
+  const btn = document.createElement('button');
+  btn.className = 'tts-btn';
+  btn.setAttribute('aria-label', 'Read English aloud');
+  btn.innerHTML = '<span class="tts-icon">🔊</span> Read English';
+  btn.addEventListener('click', () => speak(sec, btn));
+  header.appendChild(btn);
+});
+
+// Stop button in toast
+stopBtn.addEventListener('click', stopSpeech);
+
+// Reload voices on some browsers (Chrome fires voiceschanged asynchronously)
+if (window.speechSynthesis) {
+  window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+}
 </script>
 </body>
 </html>
